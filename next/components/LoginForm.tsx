@@ -24,7 +24,6 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log('something');
     dispatch(setUser(data));
     redirect("/catalog");
   };

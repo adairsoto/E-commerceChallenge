@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/Navbar";
+import { Navbar } from "@/components/navbar";
 
 export default function RootLayout({
   children,
