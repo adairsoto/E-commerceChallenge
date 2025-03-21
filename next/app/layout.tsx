@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/Navbar";
 
 export default function RootLayout({
   children,
@@ -22,7 +22,7 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
-          {children}
+          <main className="container mx-auto">{children}</main>
         </Providers>
       </body>
     </html>

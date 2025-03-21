@@ -1,4 +1,4 @@
-export default function CartLayout({
+export default function CatalogLayout({
   children,
 }: {
   children: React.ReactNode;
