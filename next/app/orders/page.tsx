@@ -12,17 +12,25 @@ import { format } from "date-fns";
 
 import { useFetchOrdersQuery } from "./orderApi";
 
+import { useAppSelector } from "@/store/store";
+
 export default function OrdersPage() {
-  const { data: orders, isLoading } = useFetchOrdersQuery("bob@email.com");
+  const { userEmail } = useAppSelector((state) => state.auth);
+  const { data: orders, isLoading } = useFetchOrdersQuery(userEmail!);
 
   if (isLoading) return <div>Loading orders...</div>;
 
-  if (!orders) return <div>No orders available</div>;
+  if (!orders || orders?.length === 0)
+    return (
+      <h1 className="mt-10 text-3xl font-semibold text-center">
+        No orders available
+      </h1>
+    );
 
   return (
     <div className="mt-10 w-3/5 mx-auto space-y-10">
       <h1 className="text-3xl font-semibold text-center">My orders</h1>
-      <Table>
+      <Table aria-label="Orders table">
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>PRODUCTS</TableColumn>
@@ -39,7 +47,7 @@ export default function OrdersPage() {
                 ))}
               </TableCell>
               <TableCell>${order.total}</TableCell>
-              <TableCell>{format(order.createdAt, "dd/MM/yyyy")}</TableCell>
+              <TableCell>{format(order.createdAt!, "dd/MM/yyyy")}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -2,9 +2,9 @@
 
 import { useFetchCartQuery } from "./cartApi";
 import CartItem from "./CartItem";
+import Summary from "./Summary";
 
 import { useAppSelector } from "@/store/store";
-import Summary from "./Summary";
 
 export default function CartPage() {
   const { cartId } = useAppSelector((state) => state.cart);

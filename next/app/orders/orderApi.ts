@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { addToast } from "@heroui/toast";
+
+import { removeCartId } from "../cart/cartSlice";
 
 import { Order } from "@/models/order";
 
@@ -18,6 +21,21 @@ export const orderApi = createApi({
         body: order,
       }),
       invalidatesTags: ["Order"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+          dispatch(removeCartId());
+          addToast({
+            title: "Order created successfully",
+            color: "success",
+          });
+        } catch {
+          addToast({
+            title: "Problem creating order",
+            color: "danger",
+          });
+        }
+      },
     }),
   }),
 });

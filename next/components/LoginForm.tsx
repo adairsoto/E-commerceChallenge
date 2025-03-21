@@ -6,10 +6,14 @@ import { Input } from "@heroui/input";
 import { GiPadlock } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 
 import { loginSchema, LoginSchema } from "@/lib/schemas/loginSchemas";
+import { useAppDispatch } from "@/store/store";
+import { setUser } from "@/auth/authSlice";
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -20,7 +24,9 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+    console.log('something');
+    dispatch(setUser(data));
+    redirect("/catalog");
   };
 
   return (

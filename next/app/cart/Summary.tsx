@@ -6,12 +6,14 @@ import { useAddOrderMutation } from "../orders/orderApi";
 
 import { CartItem } from "@/models/cart";
 import { Order } from "@/models/order";
+import { useAppSelector } from "@/store/store";
 
 type Props = {
   cartItems: CartItem[];
 };
 
 export default function Summary({ cartItems }: Props) {
+  const { userEmail } = useAppSelector((state) => state.auth);
   const [addOrder] = useAddOrderMutation();
 
   const subtotal =
@@ -21,7 +23,7 @@ export default function Summary({ cartItems }: Props) {
 
   const handleOrder = () => {
     const order: Order = {
-      customerEmail: "bob@email.com",
+      customerEmail: userEmail!,
       orderItems: cartItems.map((item) => ({
         productTitle: item.title,
         quantity: item.quantity,

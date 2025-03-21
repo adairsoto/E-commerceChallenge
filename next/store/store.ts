@@ -5,6 +5,7 @@ import { catalogApi } from "@/app/catalog/catalogApi";
 import { cartApi } from "@/app/cart/cartApi";
 import { cartSlice } from "@/app/cart/cartSlice";
 import { orderApi } from "@/app/orders/orderApi";
+import { authSlice } from "@/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     [cartApi.reducerPath]: cartApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     cart: cartSlice.reducer,
+    auth: authSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

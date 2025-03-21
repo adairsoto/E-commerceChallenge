@@ -3,7 +3,7 @@ export type Order = {
   customerEmail: string;
   orderItems: OrderItem[];
   total: number;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type OrderItem = {
