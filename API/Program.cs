@@ -1,3 +1,4 @@
+using API.Middleware;
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure;
@@ -17,12 +18,14 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(opt => 
 {
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
 });
 
 // Configure the HTTP request pipeline.
