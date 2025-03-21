@@ -23,8 +23,6 @@ public class CartRepository(AppDbContext context) : ICartRepository
 
     public async Task<bool> UpdateCartAsync(Cart cart)
     {
-        context.Carts.Update(cart);
-
         return await context.SaveChangesAsync() > 0;
     }
 }

@@ -17,7 +17,7 @@ public class CartService(ICartRepository cartRepository) : ICartService
                 Id = cart.Id,
                 Items = [.. cart.Items.Select(x => new CartItemDto
                 {
-                    ProductId = x.ProductId,
+                    ProductId = x.Product.ProductId,
                     Title = x.Product.Title,
                     Price = x.Product.Price,
                     Image = x.Product.Image,
@@ -29,13 +29,13 @@ public class CartService(ICartRepository cartRepository) : ICartService
         return null;
     }
 
-    public async Task<bool> AddItemToCartAsync(CartRequestDto cartDto)
+    public async Task<int?> AddItemToCartAsync(CartRequestDto cartDto)
     {
         var cart = await cartRepository.GetCart(cartDto.CartId);
 
         cart ??= await CreateCart();
 
-        var item = cart.Items.FirstOrDefault(x => x.ProductId == cartDto.Product.Id);
+        var item = cart.Items.FirstOrDefault(x => x.Product.ProductId == cartDto.Product.ProductId);
 
         if (item == null)
         {
@@ -47,18 +47,22 @@ public class CartService(ICartRepository cartRepository) : ICartService
         }
         else item.Quantity += cartDto.Quantity;
 
-        return await cartRepository.UpdateCartAsync(cart);
+        var result = await cartRepository.UpdateCartAsync(cart);
+
+        if (result) return cart.Id;
+
+        return null;
     }
 
-    public async Task<bool> RemoveCartItemAsync(CartRequestDto cartDto)
+    public async Task<bool> RemoveCartItemAsync(int cartId, int productId, int quantity)
     {
-        var cart = await cartRepository.GetCart(cartDto.CartId);
+        var cart = await cartRepository.GetCart(cartId);
 
-        var item = cart!.Items.FirstOrDefault(x => x.ProductId == cartDto.Product.Id);
+        var item = cart!.Items.FirstOrDefault(x => x.Product.ProductId == productId);
 
         if (item == null) return false;
 
-        item.Quantity -= cartDto.Quantity;
+        item.Quantity -= quantity;
 
         if (item.Quantity <= 0) cart.Items.Remove(item);
 

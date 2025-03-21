@@ -1,6 +1,5 @@
 using Application.Dtos;
 using Application.Interfaces;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,19 +19,19 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddItemToCart(CartRequestDto cartDto)
+        public async Task<ActionResult<int?>> AddItemToCart(CartRequestDto cartDto)
         {
             var result = await cartService.AddItemToCartAsync(cartDto);
 
-            if (!result) return BadRequest("Problem updating cart");
+            if (result == null) return BadRequest("Problem updating cart");
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<ActionResult> RemoveCartItem(CartRequestDto cartDto)
+        public async Task<ActionResult> RemoveCartItem(int cartId, int productId, int quantity)
         {
-            var result = await cartService.RemoveCartItemAsync(cartDto);
+            var result = await cartService.RemoveCartItemAsync(cartId, productId, quantity);
 
             if (!result) return BadRequest("Problem updating cart");
 
