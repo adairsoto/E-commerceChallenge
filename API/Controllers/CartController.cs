@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CartController(ICartService cartService) : ControllerBase
+    public class CartController(ICartService cartService) : BaseApiController
     {
         [HttpGet("{id}")]
         public async Task<ActionResult<CartResponseDto>> GetCart(int id)

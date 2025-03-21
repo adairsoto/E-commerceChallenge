@@ -1,5 +1,4 @@
 using Application.Dtos;
-using Domain;
 
 namespace Application.Interfaces;
 
