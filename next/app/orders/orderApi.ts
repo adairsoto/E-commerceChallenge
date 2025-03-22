@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { addToast } from "@heroui/toast";
+import { redirect } from "next/navigation";
 
 import { removeCartId } from "../cart/cartSlice";
 
@@ -35,6 +36,7 @@ export const orderApi = createApi({
             color: "danger",
           });
         }
+        redirect("/orders");
       },
     }),
   }),
