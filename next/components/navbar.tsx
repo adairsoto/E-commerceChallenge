@@ -51,7 +51,7 @@ export const Navbar = () => {
           </NavbarContent>
           <NavbarContent className="gap-10" justify="end">
             <NavbarItem as={Link} href="cart">
-              {cart ? (
+              {cartId ? (
                 <Badge color="default" content={itemCount} variant="faded">
                   <GiShoppingCart size={30} />
                 </Badge>
